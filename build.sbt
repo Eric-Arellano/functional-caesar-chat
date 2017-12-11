@@ -1,12 +1,11 @@
-import Dependencies._
+name := "functional-encryption-chat"
 
-lazy val root = (project in file(".")).
-  settings(
-    inThisBuild(List(
-      organization := "com.example",
-      scalaVersion := "2.12.3",
-      version      := "0.1.0-SNAPSHOT"
-    )),
-    name := "Hello",
-    libraryDependencies += scalaTest % Test
-  )
+version := "0.1"
+
+scalaVersion := "2.12.3"
+
+libraryDependencies += "org.scalactic" %% "scalactic" % "3.0.1"
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.1" % "test"
+libraryDependencies += "org.apache.commons" % "commons-math3" % "3.5"
+
+resolvers += "Artima Maven Repository" at "http://repo.artima.com/releases"
