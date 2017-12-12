@@ -11,7 +11,8 @@ object Console {
     val inputMode = readNumber(num => num == 1 || num == 2)
     val mode = if (inputMode == 1) CipherMode.Decrypt else CipherMode.Encrypt
     output("Input your key. This can only contain letters a-Z: ")
-    val k: Key = Key(Console.readString(s => s.forall(c => c.isLetter && c <= 'z')))
+    val k: Key = Key(Console.readString(s => !s.isEmpty &&
+      s.forall(c => c.isLetter && c <= 'z')))
     output("Input the message: ")
     val m: Message = Message(Console.readString())
     CipherCommand(m, k, mode)
