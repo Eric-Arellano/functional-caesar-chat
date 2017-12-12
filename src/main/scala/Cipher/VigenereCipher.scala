@@ -23,7 +23,7 @@ object VigenereCipher extends Cipher with Ascii {
       val m = Message(c.toString)
       val r = caesarFunction(m, k).value.charAt(0)
       (newIndex, r)
-    })._2.mkString("")
+    })._2.mkString
     Message(result)
   }
 
