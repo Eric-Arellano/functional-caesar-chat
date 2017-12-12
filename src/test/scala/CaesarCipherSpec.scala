@@ -1,15 +1,15 @@
-import Cipher.CaesarCipher
+import Cipher.Cipher
 import Models.{Key, Message}
 import org.scalatest._
 
 class CaesarCipherSpec extends FlatSpec with Matchers {
 
   private def encryptThenDecrypt(m: Message, k: Key = Key("z")): Message = {
-    val e: Message = CaesarCipher.encrypt(m, k)
-    CaesarCipher.decrypt(e, k)
+    val e: Message = Cipher.encrypt(m, k)
+    Cipher.decrypt(e, k)
   }
 
-  "The Caesar Cipher.Cipher" should "decrypt what it encrypts when using the same key" in {
+  "The Caesar Cipher" should "decrypt what it encrypts when using the same key" in {
     val original = Message("hello")
     val d = encryptThenDecrypt(original)
     d should equal (original)
@@ -17,8 +17,8 @@ class CaesarCipherSpec extends FlatSpec with Matchers {
 
   it should "not decrypt what it encrypts when using a different key" in {
     val original = Message("hello")
-    val e = CaesarCipher.encrypt(original, Key("b"))
-    val d = CaesarCipher.decrypt(Message(e.value), Key("c"))
+    val e = Cipher.encrypt(original, Key("b"))
+    val d = Cipher.decrypt(Message(e.value), Key("c"))
     d should not equal original
   }
 
