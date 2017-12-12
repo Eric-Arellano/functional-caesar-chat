@@ -9,7 +9,10 @@ object CommandLine {
     val mode = if (args.head == "-d") CipherMode.Decrypt else CipherMode.Encrypt
     val k = Key(args(1))
     val m = Message(args.drop(2).mkString(" "))
-    if (mode == CipherMode.Decrypt) Cipher.decrypt(m, k) else Cipher.encrypt(m, k)
+    mode match {
+      case CipherMode.Decrypt => Cipher.decrypt(m, k)
+      case CipherMode.Encrypt => Cipher.encrypt(m, k)
+    }
   }
 
 }

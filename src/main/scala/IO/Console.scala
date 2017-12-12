@@ -27,10 +27,13 @@ object Console {
     val inputMode = Console.readNumber(num => num == 1 || num == 2)
     val mode = if (inputMode == 1) CipherMode.Decrypt else CipherMode.Encrypt
     Console.instruct(Instruction("Input your key. This can only contain letters a-Z: "))
-    val key = Key(Console.readString(s => s.forall(c => c.isLetter && c <= 'z')))
+    val k: Key = Key(Console.readString(s => s.forall(c => c.isLetter && c <= 'z')))
     Console.instruct(Instruction("Input the message: "))
-    val message = Message(Console.readString())
-    if (mode == CipherMode.Decrypt) Cipher.decrypt(message, key) else Cipher.encrypt(message, key)
+    val m: Message = Message(Console.readString())
+    mode match {
+      case CipherMode.Decrypt => Cipher.decrypt(m, k)
+      case CipherMode.Encrypt => Cipher.encrypt(m, k)
+    }
   }
 
 }
