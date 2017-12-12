@@ -1,8 +1,13 @@
 package Cipher
 
-import Models.{Key, Message}
+import Models.{CipherCommand, CipherMode, Key, Message}
 
 object Cipher extends Cipher {
+
+  def convertMessage(command: CipherCommand): Message = command.mode match {
+    case CipherMode.Encrypt => Cipher.encrypt(command.m, command.k)
+    case CipherMode.Decrypt => Cipher.decrypt(command.m, command.k)
+  }
 
   def encrypt(m: Message, k: Key): Message =
     if (k.value.length > 1) VigenereCipher.encrypt(m, k) else CaesarCipher.encrypt(m, k)

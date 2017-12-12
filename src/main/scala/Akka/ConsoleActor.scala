@@ -17,7 +17,7 @@ class ConsoleActor extends Actor {
   import ConsoleActor._
 
   def receive = {
-    case GetMessage => sender ! Console.readInputs()
-    case Print(s) => Console.instruct(s)
+    case GetMessage => sender ! Console.readCipherCommand()
+    case Print(s) => Console.output(s)
   }
 }

@@ -1,18 +1,14 @@
 package IO
 
-import Cipher.Cipher
-import Models.{CipherMode, Key, Message}
+import Models.{CipherCommand, CipherMode, Key, Message}
 
 object CommandLine {
 
-  def interpret(args: List[String]): Message = {
+  def interpret(args: List[String]): CipherCommand = {
     val mode = if (args.head == "-d") CipherMode.Decrypt else CipherMode.Encrypt
     val k = Key(args(1))
     val m = Message(args.drop(2).mkString(" "))
-    mode match {
-      case CipherMode.Decrypt => Cipher.decrypt(m, k)
-      case CipherMode.Encrypt => Cipher.encrypt(m, k)
-    }
+    CipherCommand(m, k, mode)
   }
 
 }

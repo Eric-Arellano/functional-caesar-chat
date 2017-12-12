@@ -1,10 +1,11 @@
+import Cipher.Cipher
 import IO.Console
-import Models.Message
 
 object App extends App {
 //  val m: Message = CommandLine.interpret(args.toList)
 //  println(m)
 
-  val m: Message = Console.consoleApp()
+  val command = Console.readCipherCommand()
+  val m = Cipher.convertMessage(command)
   println(m)
 }
