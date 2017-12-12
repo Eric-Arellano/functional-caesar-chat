@@ -1,4 +1,4 @@
-import IO.{CommandLine, Console}
+import IO.Console
 import Models.Message
 
 object App extends App {

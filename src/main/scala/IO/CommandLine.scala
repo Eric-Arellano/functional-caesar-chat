@@ -1,7 +1,7 @@
 package IO
 
 import Cipher.Cipher
-import Models.{Message, Key}
+import Models.{CipherMode, Key, Message}
 
 object CommandLine {
 

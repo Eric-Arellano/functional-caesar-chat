@@ -1,17 +1,16 @@
 package Akka
 
-import IO.CipherMode
-import Models.{Key, Message}
 import akka.actor.{ActorRef, ActorSystem}
-
 
 object ChatApp extends App {
   val system: ActorSystem = ActorSystem("chatApp")
 
-  val printer: ActorRef = system.actorOf(PrinterActor.props, "printerActor")
-  val cipher: ActorRef = system.actorOf(CipherActor.props(printer), "cipherActor")
+  val console: ActorRef = system.actorOf(ConsoleActor.props, "consoleActor")
+  val cipher: ActorRef = system.actorOf(CipherActor.props, "cipherActor")
+  val supervisor: ActorRef = system.actorOf(SupervisorActor.props(cipher, console), "supervisorActor")
 
-  cipher ! (Message("Hi Akka!"), Key("ab"), CipherMode.Encrypt)
-  cipher ! (Message("Ik Clmb!"), Key("ab"), CipherMode.Decrypt)
+  import SupervisorActor._
+
+  supervisor ! Start
 
 }

@@ -1,7 +1,7 @@
 package IO
 
 import Cipher.Cipher
-import Models.{Key, Message}
+import Models.{CipherCommand, CipherMode, Key, Message}
 
 import scala.io.StdIn
 
@@ -20,7 +20,7 @@ object Console {
     if (validation(s)) s else readString(validation)
   }
 
-  def consoleApp(): Message = {
+  def readInputs(): CipherCommand = {
     instruct("Input 1 to decrypt or 2 to encrypt: ")
     val inputMode = readNumber(num => num == 1 || num == 2)
     val mode = if (inputMode == 1) CipherMode.Decrypt else CipherMode.Encrypt
@@ -28,9 +28,14 @@ object Console {
     val k: Key = Key(Console.readString(s => s.forall(c => c.isLetter && c <= 'z')))
     instruct("Input the message: ")
     val m: Message = Message(Console.readString())
-    mode match {
-      case CipherMode.Decrypt => Cipher.decrypt(m, k)
-      case CipherMode.Encrypt => Cipher.encrypt(m, k)
+    CipherCommand(m, k, mode)
+  }
+
+  def consoleApp(): Message = {
+    val command = readInputs()
+    command.mode match {
+      case CipherMode.Decrypt => Cipher.decrypt(command.m, command.k)
+      case CipherMode.Encrypt => Cipher.encrypt(command.m, command.k)
     }
   }
 

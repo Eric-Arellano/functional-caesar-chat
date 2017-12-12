@@ -1,22 +1,18 @@
 package Akka
 
 import Cipher.Cipher
-import IO.CipherMode
-import Models.{Key, Message}
-import akka.actor.{Actor, ActorRef, Props}
+import Models.{CipherCommand, CipherMode}
+import akka.actor.{Actor, Props}
 
 
 object CipherActor {
-  def props(caller: ActorRef): Props = Props(new CipherActor(caller))
-
+  def props: Props = Props(new CipherActor)
 }
 
-class CipherActor(caller: ActorRef) extends Actor {
+class CipherActor extends Actor {
 
   def receive = {
-    case (m: Message, k: Key, CipherMode.Encrypt) =>
-      caller ! Cipher.encrypt(m, k)
-    case (m: Message, k: Key, CipherMode.Decrypt) =>
-      caller ! Cipher.decrypt(m, k)
+    case CipherCommand(m, k, CipherMode.Encrypt) => sender ! Cipher.encrypt(m, k)
+    case CipherCommand(m, k, CipherMode.Decrypt) => sender ! Cipher.decrypt(m, k)
   }
 }
