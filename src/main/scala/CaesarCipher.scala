@@ -1,32 +1,24 @@
-object CaesarCipher extends Cipher {
+object CaesarCipher extends Cipher with Ascii {
 
-  def convertCaesarKey(k: Key): Int = {
+  def encrypt(m: Message, k: Key): Message = convertMessage(m, k, encrypt)
+
+  def decrypt(m: Message, k: Key): Message = convertMessage(m, k, decrypt)
+
+  private def convertMessage(m: Message, k: Key, shiftFunction: (Char, Int, Int) => Char): Message = {
+    val keyShift = convertKey(k)
+    val result = m.value.map(c => {
+      val t = charType(c)
+      val ascii = convertFromASCII(c, t)
+      val shifted = shift(ascii, shiftFunction, keyShift)
+      if (t == CharType.NonASCII) c else convertToASCII(shifted, t)
+    })
+    Message(result.toString)
+  }
+
+  private def convertKey(k: Key): Int = {
     val l = k.value.charAt(0).toLower
-    val ascii = convertFromASCII(l, "lower")
+    val ascii = convertFromASCII(l, CharType.LowerCase)
     shift(ascii, convertKey)
   }
-
-  def encrypt(m: Message, k: Key): Message = {
-    val keyShift = convertCaesarKey(k)
-    val result = m.value.map(c => {
-      val cType = charType(c)
-      val ascii = convertFromASCII(c, cType)
-      val shifted = shift(ascii, encrypt, keyShift)
-      if (cType == "non-ascii") c else convertToASCII(shifted, cType)
-    } )
-    Message(result.toString)
-  }
-
-  def decrypt(m: Message, k: Key): Message = {
-    val keyShift = convertCaesarKey(k)
-    val result = m.value.map(c => {
-      val cType = charType(c)
-      val ascii = convertFromASCII(c, cType)
-      val shifted = shift(ascii, decrypt, keyShift)
-      if (cType == "non-ascii") c else convertToASCII(shifted, cType)
-    } )
-    Message(result.toString)
-  }
-
 
 }
