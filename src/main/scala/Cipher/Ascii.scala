@@ -1,6 +1,6 @@
 package Cipher
 
-trait Ascii {
+protected trait Ascii {
 
   private val lowerLetters = ('a' to 'z').toSet
   private val upperLetters = ('A' to 'Z').toSet

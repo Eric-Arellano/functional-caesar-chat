@@ -3,7 +3,7 @@ package Cipher
 import Models.{Key, Message}
 import scalaz._, syntax.std.list._
 
-object VigenereCipher extends Cipher with Ascii {
+protected object VigenereCipher extends Cipher with Ascii {
 
   def encrypt(m: Message, k: Key): Message = {
     val f = (m: Message, k: Key) => CaesarCipher.encrypt(m, k)

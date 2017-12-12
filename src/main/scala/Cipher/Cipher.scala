@@ -11,7 +11,7 @@ object Cipher extends Cipher {
     if (k.value.length > 1) VigenereCipher.decrypt(m, k) else CaesarCipher.decrypt(m, k)
 }
 
-trait Cipher {
+protected trait Cipher {
 
   def encrypt(m: Message, k: Key): Message
 
