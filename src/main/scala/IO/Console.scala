@@ -5,12 +5,10 @@ import Models.{Key, Message}
 
 import scala.io.StdIn
 
-case class Instruction(value: String) extends AnyVal
-
 object Console {
 
-  def instruct(instr: Instruction): Unit =
-    println(instr.value)
+  def instruct(instr: String): Unit =
+    println(instr)
 
   def readNumber(validation: Int => Boolean = _ => true): Int = {
     val i = StdIn.readInt()
@@ -23,12 +21,12 @@ object Console {
   }
 
   def consoleApp(): Message = {
-    Console.instruct(Instruction("Input 1 to decrypt or 2 to encrypt: "))
-    val inputMode = Console.readNumber(num => num == 1 || num == 2)
+    instruct("Input 1 to decrypt or 2 to encrypt: ")
+    val inputMode = readNumber(num => num == 1 || num == 2)
     val mode = if (inputMode == 1) CipherMode.Decrypt else CipherMode.Encrypt
-    Console.instruct(Instruction("Input your key. This can only contain letters a-Z: "))
+    instruct("Input your key. This can only contain letters a-Z: ")
     val k: Key = Key(Console.readString(s => s.forall(c => c.isLetter && c <= 'z')))
-    Console.instruct(Instruction("Input the message: "))
+    instruct("Input the message: ")
     val m: Message = Message(Console.readString())
     mode match {
       case CipherMode.Decrypt => Cipher.decrypt(m, k)
