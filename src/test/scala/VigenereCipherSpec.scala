@@ -1,3 +1,5 @@
+import Cipher.VigenereCipher
+import Models.{Key, Message}
 import org.scalatest._
 
 class VigenereCipherSpec extends FlatSpec with Matchers {
@@ -7,7 +9,7 @@ class VigenereCipherSpec extends FlatSpec with Matchers {
     VigenereCipher.decrypt(e, k)
   }
 
-  "The Vigenere Cipher" should "decrypt what it encrypts when using the same key" in {
+  "The Vigenere Cipher.Cipher" should "decrypt what it encrypts when using the same key" in {
     val original = Message("hello")
     val d = encryptThenDecrypt(original)
     d should equal (original)

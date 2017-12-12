@@ -1,3 +1,7 @@
+package Cipher
+
+import Models.{Key, Message}
+
 object CaesarCipher extends Cipher with Ascii {
 
   def encrypt(m: Message, k: Key): Message = convertMessage(m, k, encrypt)

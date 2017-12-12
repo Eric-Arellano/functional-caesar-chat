@@ -1,3 +1,7 @@
+package Cipher
+
+import Models.{Key, Message}
+
 object Cipher extends Cipher {
 
   def encrypt(m: Message, k: Key): Message =

@@ -1,3 +1,5 @@
+import Cipher.CaesarCipher
+import Models.{Key, Message}
 import org.scalatest._
 
 class CaesarCipherSpec extends FlatSpec with Matchers {
@@ -7,7 +9,7 @@ class CaesarCipherSpec extends FlatSpec with Matchers {
     CaesarCipher.decrypt(e, k)
   }
 
-  "The Caesar Cipher" should "decrypt what it encrypts when using the same key" in {
+  "The Caesar Cipher.Cipher" should "decrypt what it encrypts when using the same key" in {
     val original = Message("hello")
     val d = encryptThenDecrypt(original)
     d should equal (original)

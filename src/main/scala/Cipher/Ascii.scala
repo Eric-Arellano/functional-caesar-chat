@@ -1,3 +1,5 @@
+package Cipher
+
 trait Ascii {
 
   private val lowerLetters = ('a' to 'z').toSet
