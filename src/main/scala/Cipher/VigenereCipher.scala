@@ -1,6 +1,7 @@
 package Cipher
 
 import Models.{Key, Message}
+import scalaz._, syntax.std.list._
 
 object VigenereCipher extends Cipher with Ascii {
 
@@ -14,22 +15,18 @@ object VigenereCipher extends Cipher with Ascii {
     convertMessage(m, k, f)
   }
 
-  private def convertMessage(m: Message, k: Key, caesarFunction: (Message, Key) => Message): Message = {
-    var keyIndex = 0    // TODO: NOT FUNCTIONAL!
-    val result = m.value.map(c => {
-      val message = Message(c.toString)
-      val (key, i) = getKey(k, keyIndex)
-      keyIndex = i
-      caesarFunction(message, key).value.charAt(0)
-    })
-    Message(result.toString)
+  private def convertMessage(message: Message, key: Key, caesarFunction: (Message, Key) => Message): Message = {
+    val initialIndex = 0
+    val result: String = message.value.toList.mapAccumLeft(initialIndex, (index: Int, c: Char) => {
+      val newIndex = getNewIndex(index, key)
+      val k = Key(key.value(index).toString)
+      val m = Message(c.toString)
+      val r = caesarFunction(m, k).value.charAt(0)
+      (newIndex, r)
+    })._2.mkString("")
+    Message(result)
   }
 
-  private def getKey(k: Key, i: Int): (Key, Int) = {
-    val key = Key(k.value(i).toString)
-    if (i == k.value.length - 1)
-      (key, 0)
-    else
-      (key, i + 1)
-  }
+  private def getNewIndex(i: Int, k: Key): Int =
+    if (i == k.value.length - 1) 0 else i + 1
 }
