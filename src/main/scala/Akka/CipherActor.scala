@@ -7,21 +7,16 @@ import akka.actor.{Actor, ActorRef, Props}
 
 
 object CipherActor {
-  def props(printerActor: ActorRef): Props = Props(new CipherActor(printerActor))
-
-  case object Send
+  def props(caller: ActorRef): Props = Props(new CipherActor(caller))
 
 }
 
-class CipherActor(printerActor: ActorRef) extends Actor {
-
-  import CipherActor._
-
-  var message: Message = Message("")
+class CipherActor(caller: ActorRef) extends Actor {
 
   def receive = {
-    case (m: Message, k: Key, CipherMode.Encrypt) => message = Cipher.encrypt(m, k)
-    case (m: Message, k: Key, CipherMode.Decrypt) => message = Cipher.decrypt(m, k)
-    case Send => printerActor ! message
+    case (m: Message, k: Key, CipherMode.Encrypt) =>
+      caller ! Cipher.encrypt(m, k)
+    case (m: Message, k: Key, CipherMode.Decrypt) =>
+      caller ! Cipher.decrypt(m, k)
   }
 }
