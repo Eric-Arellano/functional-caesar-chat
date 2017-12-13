@@ -24,6 +24,6 @@ class CommandLineSpec extends FlatSpec with Matchers {
   it can "accept a message with spaces in-between" in {
     val args = List("-e", "f", "hello", "this", "is", "a", "test")
     val m: Message = CommandLine.interpret(args).m
-    m should equal("hello this is a test")
+    m should equal(Message("hello this is a test"))
   }
 }
