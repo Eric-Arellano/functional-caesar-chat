@@ -9,10 +9,15 @@ class CaesarCipherSpec extends FlatSpec with Matchers {
     Cipher.decrypt(e, k)
   }
 
-  "The Caesar Cipher" should "decrypt what it encrypts when using the same key" in {
+  "The Caesar Cipher" should "encrypt 'hello' with key 'b' to be 'jgnnq" in {
+    val e = Cipher.encrypt(Message("hello"), Key("b")).value
+    e should equal("jgnnq")
+  }
+
+  it should "decrypt what it encrypts when using the same key" in {
     val original = Message("hello")
     val d = encryptThenDecrypt(original)
-    d should equal (original)
+    d should equal(original)
   }
 
   it should "not decrypt what it encrypts when using a different key" in {

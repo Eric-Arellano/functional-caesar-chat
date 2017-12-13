@@ -9,10 +9,15 @@ class VigenereCipherSpec extends FlatSpec with Matchers {
     Cipher.decrypt(e, k)
   }
 
-  "The Vigenere Cipher" should "decrypt what it encrypts when using the same key" in {
+  "The Vigenere Cipher" should "encrypt 'hello' with key 'abc' to be 'igomq'" in {
+    val e = Cipher.encrypt(Message("hello"), Key("abc")).value
+    e should equal("igomq")
+  }
+
+  it should "decrypt what it encrypts when using the same key" in {
     val original = Message("hello")
     val d = encryptThenDecrypt(original)
-    d should equal (original)
+    d should equal(original)
   }
 
   it should "not decrypt what it encrypts when using a different key" in {
