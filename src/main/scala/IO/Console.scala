@@ -21,6 +21,13 @@ object Console {
   def output(instr: String): Unit =
     println(instr)
 
+  def checkIfQuit(): Boolean = {
+    output("Would you like to quit? Input 1 to quit or 2 to continue: ")
+    val input = readNumber(num => num == 1 || num == 2)
+    if (input == 1) true else false
+  }
+
+
   def readNumber(validation: Int => Boolean = _ => true): Int = {
     val i = StdIn.readInt()
     if (validation(i)) i else readNumber(validation)
