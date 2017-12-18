@@ -7,7 +7,7 @@ protected trait Ascii {
   final val AlphabetSize = 26
 
   object CharType extends Enumeration {
-    val LowerCase, UpperCase, NonASCII = Value
+    val LowerCase, UpperCase, NonLetter = Value
   }
 
   val charType: (Char) => CharType.Value = (c: Char) => {
@@ -16,7 +16,7 @@ protected trait Ascii {
     else if (upperLetters.contains(c))
       CharType.UpperCase
     else
-      CharType.NonASCII
+      CharType.NonLetter
   }
 
   def shift(c: Char, shiftFunction: (Char, Int, Int) => Char, shift: Int = 0): Char =

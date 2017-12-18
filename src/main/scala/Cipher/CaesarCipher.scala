@@ -12,9 +12,12 @@ protected object CaesarCipher extends Cipher with Ascii {
     val keyShift = convertKey(k)
     val result = m.value.map(c => {
       val t = charType(c)
-      val ascii = convertFromASCII(c, t)
-      val shifted = shift(ascii, shiftFunction, keyShift)
-      if (t == CharType.NonASCII) c else convertToASCII(shifted, t)
+      if (t == CharType.NonLetter) c
+      else {
+        val ascii = convertFromASCII(c, t)
+        val shifted = shift(ascii, shiftFunction, keyShift)
+        convertToASCII(shifted, t)
+      }
     })
     Message(result.toString)
   }
