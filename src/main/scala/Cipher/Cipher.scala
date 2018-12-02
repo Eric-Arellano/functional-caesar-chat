@@ -22,11 +22,13 @@ protected trait Cipher {
 
   def decrypt(m: Message, k: Key): Message
 
-  val encrypt: (Char, Int, Int) => Char =
-    (c: Char, shift: Int, alphabetSize: Int) => Math.floorMod(c + shift, alphabetSize).toChar
-  val decrypt: (Char, Int, Int) => Char =
-    (c: Char, shift: Int, alphabetSize: Int) => Math.floorMod(c - shift, alphabetSize).toChar
-  val convertKey: (Char, Int, Int) => Char =
-    (c: Char, shift: Int, alphabetSize: Int) => (Math.floorMod(c, alphabetSize) + 1).toChar
+  def encrypt(c: Char, shift: Int, alphabetSize: Int): Char =
+    Math.floorMod(c + shift, alphabetSize).toChar
+
+  def decrypt(c: Char, shift: Int, alphabetSize: Int): Char =
+    Math.floorMod(c - shift, alphabetSize).toChar
+
+  def convertKey(c: Char, shift: Int, alphabetSize: Int): Char =
+    (Math.floorMod(c, alphabetSize) + 1).toChar
 
 }
