@@ -10,7 +10,7 @@ protected trait Ascii {
     val LowerCase, UpperCase, NonLetter = Value
   }
 
-  val charType: (Char) => CharType.Value = (c: Char) => {
+  def charType(c: Char): CharType.Value = {
     if (lowerLetters.contains(c))
       CharType.LowerCase
     else if (upperLetters.contains(c))
@@ -34,7 +34,7 @@ protected trait Ascii {
     int.toChar
   }
 
-  private val asciiShiftAmount = (t: CharType.Value) => {
+  private def asciiShiftAmount(t: CharType.Value): Int = {
     if (t == CharType.LowerCase) 97
     else if (t == CharType.UpperCase) 65
     else 0
